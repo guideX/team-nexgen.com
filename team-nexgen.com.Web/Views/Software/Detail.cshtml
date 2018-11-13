@@ -1,0 +1,265 @@
+﻿@model team_nexgen.com.Models.DetailViewModel
+@{
+    ViewBag.Title = "Detail";
+}
+<div class="row">
+  <div class="col-md-12">
+    <div class="portfolio-title">
+      <div class="row">
+        <div class="portfolio-nav-all col-md-1">
+          <a href="/software" data-tooltip="" data-original-title="Back to list"><i class="fa fa-th"></i></a>
+        </div>
+        <div class="col-md-10 center">
+          <h2 style="display: none;" class="mb-none">@Model.Software.Description</h2>
+        </div>
+        <div class="portfolio-nav col-md-1">
+          &nbsp;
+        </div>
+      </div>
+    </div>
+    <hr class="tall">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="owl-carousel owl-theme owl-loaded owl-drag owl-carousel-init" data-plugin-options="{&quot;items&quot;: 1, &quot;margin&quot;: 10}">
+          <div class="owl-stage-outer">
+            <img alt="" src="@Model.Screenshots.FirstOrDefault().Url" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="portfolio-info">
+          <div class="row">
+            <div class="col-md-12 center">
+              <ul>
+                <li style="display: none;">
+                  <a href="#" data-tooltip="" data-original-title="Like"><i class="fa fa-heart"></i>14</a>
+                </li>
+                <li>
+                  <i class="fa fa-cube" ></i> 
+                  @Model.DefaultVersion.Version.ToString() <i class="fa fa-calendar"></i> @Model.Software.InsertTimeStamp.ToString().Split(' ')[0]
+                </li>
+                <li>
+                  <i class="fa fa-tags"></i> 
+                  @{ var filterHtml = ""; }
+                  @foreach(var filter in Model.SoftwareFilters) {
+                    if (string.IsNullOrEmpty(filterHtml)) {
+                      filterHtml = "<a href='#'>" + @filter.Description + "</a>";
+                    } else {
+                      filterHtml += ", <a href='#'>" + @filter.Description + "</a>";
+                    }
+                  }
+                  @Html.Raw(filterHtml)
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <h4 class="heading-primary"><strong>Description</strong></h4>
+        <p class="mt-xlg">@Model.Software.LongDescription</p>
+        <table style="width: 100%;" class="table-striped table">
+          <tr>
+            <td><b>Description</b></td>
+            <td style="text-align: right;"><b>Url</b></td>
+          </tr>
+          @foreach(var downloadUrl in Model.DownloadUrls) {
+            <tr>
+              <td>@downloadUrl.Description</td>
+              <td style="text-align: right;">
+                <a href="@downloadUrl.Url" class="btn btn-primary btn-icon btn-dark">
+                  <i class="fa fa-download"></i>Download
+                </a>
+              </td>
+            </tr>
+          }
+        </table>
+      </div>
+    </div>
+    <div class="tabs tabs-product">
+      <ul class="nav nav-tabs"">
+        <li class="active"><a href="#productDescription" data-toggle="tab">Description</a></li>
+        <li><a href="#productInfo" data-toggle="tab">Aditional Information</a></li>
+        <li  style="display: none;"><a href="#productReviews" data-toggle="tab">Reviews (2)</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="productDescription">
+          @Model.Software.LongDescription
+        </div>
+        <div class="tab-pane" id="productInfo" style="display: none;">
+          <table class="table table-striped mt-xl">
+            <tbody>
+              <tr>
+                <th>
+                  
+                </th>
+                <td>
+                  
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  
+                </th>
+                <td>
+                  
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  
+                </th>
+                <td>
+                  
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane" id="productReviews">
+          <ul class="comments">
+            <li>
+              <div class="comment">
+                <div class="img-thumbnail">
+                  <img class="avatar" alt="" src="img/avatar-2.jpg">
+                </div>
+                <div class="comment-block">
+                  <div class="comment-arrow"></div>
+                  <span class="comment-by">
+                    <strong>John Doe</strong>
+                    <span class="pull-right">
+                      <div title="Rated 5.00 out of 5" class="star-rating">
+                        <span style="width:100%"><strong class="rating">5.00</strong> out of 5</span>
+                      </div>
+                    </span>
+                  </span>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae, gravida pellentesque urna varius vitae. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim ornare nisi, vitae mattis nulla ante id dui.</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <hr class="tall">
+          <h4 class="heading-primary">Add a review</h4>
+          <div class="row">
+            <div class="col-md-12">
+
+              <form action="#" id="submitReview" method="post">
+                <div class="row">
+                  <div class="form-group">
+                    <div class="col-md-6">
+                      <label>Your name *</label>
+                      <input type="text" value="" data-msg-required="Please enter your name." maxlength="100" class="form-control" name="name" id="name">
+                    </div>
+                    <div class="col-md-6">
+                      <label>Your email address *</label>
+                      <input type="email" value="" data-msg-required="Please enter your email address." data-msg-email="Please enter a valid email address." maxlength="100" class="form-control" name="email" id="email">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <label>Review *</label>
+                      <textarea maxlength="5000" data-msg-required="Please enter your message." rows="10" class="form-control" name="message" id="message"></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <input type="submit" value="Submit Review" class="btn btn-primary" data-loading-text="Loading...">
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="display: none;">
+      <div class="col-md-12">
+
+        <hr class="tall">
+
+        <h4 class="mb-md text-uppercase">Related <strong>Work</strong></h4>
+
+        <div class="row">
+
+          <ul class="portfolio-list">
+            <li class="col-md-3 col-sm-6 col-xs-12">
+              <div class="portfolio-item">
+                <a href="portfolio-single-project.html">
+                  <span class="thumb-info">
+                    <span class="thumb-info-wrapper">
+                      <img src="img/projects/project.jpg" class="img-responsive" alt="">
+                      <span class="thumb-info-title">
+                        <span class="thumb-info-inner">Random Chars</span>
+                        <span class="thumb-info-type">Website</span>
+                      </span>
+                      <span class="thumb-info-action">
+                        <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
+                      </span>
+                    </span>
+                  </span>
+                </a>
+              </div>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+              <div class="portfolio-item">
+                <a href="portfolio-single-project.html">
+                  <span class="thumb-info">
+                    <span class="thumb-info-wrapper">
+                      <img src="img/projects/project-1.jpg" class="img-responsive" alt="">
+                      <span class="thumb-info-title">
+                        <span class="thumb-info-inner">Full House</span>
+                        <span class="thumb-info-type">Website</span>
+                      </span>
+                      <span class="thumb-info-action">
+                        <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
+                      </span>
+                    </span>
+                  </span>
+                </a>
+              </div>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+              <div class="portfolio-item">
+                <a href="portfolio-single-project.html">
+                  <span class="thumb-info">
+                    <span class="thumb-info-wrapper">
+                      <img src="img/projects/project-2.jpg" class="img-responsive" alt="">
+                      <span class="thumb-info-title">
+                        <span class="thumb-info-inner">The Fly</span>
+                        <span class="thumb-info-type">Logo</span>
+                      </span>
+                      <span class="thumb-info-action">
+                        <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
+                      </span>
+                    </span>
+                  </span>
+                </a>
+              </div>
+            </li>
+            <li class="col-md-3 col-sm-6 col-xs-12">
+              <div class="portfolio-item">
+                <a href="portfolio-single-project.html">
+                  <span class="thumb-info">
+                    <span class="thumb-info-wrapper">
+                      <img src="img/projects/project-3.jpg" class="img-responsive" alt="">
+                      <span class="thumb-info-title">
+                        <span class="thumb-info-inner">Run Away</span>
+                        <span class="thumb-info-type">Brand</span>
+                      </span>
+                      <span class="thumb-info-action">
+                        <span class="thumb-info-action-icon"><i class="fa fa-link"></i></span>
+                      </span>
+                    </span>
+                  </span>
+                </a>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
